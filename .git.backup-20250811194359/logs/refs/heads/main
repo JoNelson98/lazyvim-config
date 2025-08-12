@@ -1,0 +1,4 @@
+2b4293a4c10a29cb52eefc430d3d77582c1a24fd 69f476fbfc38772daa632d80137eb701f120bbb7 Jonathan Nelson <jonathanator14@gmail.com> 1754198102 -0500	commit: working i guess?
+69f476fbfc38772daa632d80137eb701f120bbb7 7d313fef6cdfd0f84c7d8782f880dbf551aabf98 Jonathan Nelson <jonathanator14@gmail.com> 1754951313 -0500	commit: config cleanup + VeryLazy Setup + flash.nvim > leap.nvim
+7d313fef6cdfd0f84c7d8782f880dbf551aabf98 0a4f494933d6622a306875f69839bf95a4538fe3 Jonathan Nelson <jonathanator14@gmail.com> 1754957758 -0500	commit: Make plugin loading lazy-by-default; wire Telescope keys
+0a4f494933d6622a306875f69839bf95a4538fe3 0a4f494933d6622a306875f69839bf95a4538fe3 Jonathan Nelson <jonathanator14@gmail.com> 1754958157 -0500	Branch: renamed refs/heads/main to refs/heads/main

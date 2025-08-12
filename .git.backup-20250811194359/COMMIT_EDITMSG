@@ -1,0 +1,6 @@
+Make plugin loading lazy-by-default; wire Telescope keys
+
+- Use VeryLazy/cmd/events for heavy plugins (telescope, nvim-tree, lsp, cmp, conform, tmux nav, leetcode)
+- Add <leader>ff/fg/fw/fb/fh to auto-load Telescope
+- Keep Flash on VeryLazy; preserve mappings
+- Safer lazy requires in mappings

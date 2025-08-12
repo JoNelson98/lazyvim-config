@@ -1,0 +1,2 @@
+# ignore local git backups
+.git.backup-*

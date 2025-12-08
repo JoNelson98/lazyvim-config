@@ -1,10 +1,15 @@
 require("nvchad.configs.lspconfig").defaults()
 
--- read :h vim.lsp.config for changing options of lsp servers 
-require('lspconfig').gopls.setup{
-  cmd = {'gopls'},
-  filetypes = {'go','gomod'},
-  root_dir = require('lspconfig').util.root_pattern('go.mod','.git'),
+-- LSP servers configuration
+
+-- New  Neovim 0.11 LSP entry point
+local lsp = vim.lsp.config
+local util = require "lspconfig.util"
+
+lsp.gopls.setup {
+  cmd = { "gopls" },
+  filetypes = { "go", "gomod" },
+  root_dir = util.root_pattern("go.mod", ".git"),
   settings = {
     gopls = {
       analyses = {
@@ -13,19 +18,19 @@ require('lspconfig').gopls.setup{
         unreachable = true,
       },
       staticcheck = true,
-    }
-  }
+    },
+  },
 }
 
 -- TypeScript/JavaScript (tsserver via typescript-tools or built-in)
 -- Use the new name `ts_ls` with mason-lspconfig
 pcall(function()
-  require('lspconfig').ts_ls.setup{}
+  lsp.ts_ls.setup {}
 end)
 
 -- ESLint
 pcall(function()
-  require('lspconfig').eslint.setup{
+  lsp.eslint.setup {
     settings = {
       workingDirectories = { mode = "auto" },
       format = false,
@@ -34,6 +39,12 @@ pcall(function()
 end)
 
 -- HTML/CSS/JSON
-pcall(function() require('lspconfig').html.setup{} end)
-pcall(function() require('lspconfig').cssls.setup{} end)
-pcall(function() require('lspconfig').jsonls.setup{} end)
+pcall(function()
+  lsp.html.setup {}
+end)
+pcall(function()
+  lsp.cssls.setup {}
+end)
+pcall(function()
+  lsp.jsonls.setup {}
+end)

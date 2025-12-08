@@ -1,4 +1,5 @@
 return {
+  { "dasupradyumna/midnight.nvim", lazy = false },
   -- Ensure required LSP servers are installed
   {
     "williamboman/mason-lspconfig.nvim",
@@ -73,6 +74,10 @@ return {
     build = ":GoInstallBinaries",
     config = function()
       vim.g.go_fmt_command = "goimports"
+      -- Disable vim-go overriding 'K' for godoc so our scroll mapping works
+      vim.g.go_doc_keywordprg_enabled = 0
+      -- Also disable default definition mappings to prevent surprises
+      vim.g.go_def_mapping_enabled = 0
     end,
   },
 
@@ -85,37 +90,12 @@ return {
       "neovim/nvim-lspconfig",
     },
     build = ":lua require('go.install').update_all_sync()",
-    opts = {
-      -- use default command name instead of boolean
-      goimports = "goimports",
-      lsp_cfg = true,
-    },
-    config = function(_, opts)
-      require("go").setup(opts)
-      vim.api.nvim_create_autocmd("BufWritePre", {
-        pattern = "*.go",
-        callback = function()
-          require("go.format").goimports()
-        end,
-        group = vim.api.nvim_create_augroup("GoFormat", {}),
-      })
-    end,
+    config = require "configs.go",
   },
   {
     "nvim-tree/nvim-tree.lua",
     cmd = { "NvimTreeToggle", "NvimTreeFocus", "NvimTreeFindFile", "NvimTreeOpen", "NvimTreeClose" },
-    opts = {
-      on_attach = function(bufnr)
-        local api = require "nvim-tree.api"
-        local function opts(desc)
-          return { desc = "nvim-tree: " .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
-        end
-        api.config.mappings.default_on_attach(bufnr)
-
-        vim.keymap.set("n", "l", api.node.open.edit, opts "Open")
-        vim.keymap.set("n", "h", api.node.navigate.parent_close, opts "Close")
-      end,
-    },
+    opts = require "configs.nvimtree",
   },
 
   {
@@ -124,40 +104,45 @@ return {
     cmd = "Telescope",
     module = { "telescope", "telescope.builtin" },
     keys = {
-      { "<leader>ff", function() require("telescope.builtin").find_files() end, desc = "Find files" },
-      { "<leader>fg", function() require("telescope.builtin").live_grep() end,  desc = "Live grep" },
-      { "<leader>fw", function() require("telescope.builtin").live_grep() end,  desc = "Live grep (words)" },
-      { "<leader>fb", function() require("telescope.builtin").buffers() end,    desc = "Buffers" },
-      { "<leader>fh", function() require("telescope.builtin").help_tags() end,  desc = "Help tags" },
+      {
+        "<leader>ff",
+        function()
+          require("telescope.builtin").find_files()
+        end,
+        desc = "Find files",
+      },
+      {
+        "<leader>fg",
+        function()
+          require("telescope.builtin").live_grep()
+        end,
+        desc = "Live grep",
+      },
+      {
+        "<leader>fw",
+        function()
+          require("telescope.builtin").live_grep()
+        end,
+        desc = "Live grep (words)",
+      },
+      {
+        "<leader>fb",
+        function()
+          require("telescope.builtin").buffers()
+        end,
+        desc = "Buffers",
+      },
+      {
+        "<leader>fh",
+        function()
+          require("telescope.builtin").help_tags()
+        end,
+        desc = "Help tags",
+      },
     },
     opts = function(_, opts)
-      local actions = require "telescope.actions"
-
-      opts.defaults.layout_strategy = "flex"
-      opts.defaults.layout_config = vim.tbl_deep_extend("force", opts.defaults.layout_config or {}, {
-        preview_cutoff = 1,
-
-        width = function(_, max_cols)
-          return max_cols
-        end,
-        height = function(_, max_lines)
-          return max_lines
-        end,
-      })
-      -- NEW: custom keymaps
-      opts.defaults.mappings = vim.tbl_deep_extend("force", opts.defaults.mappings or {}, {
-        -- INSERT MODE mappings
-        i = {
-          ["<S-j>"] = actions.move_selection_next,
-          ["<S-k>"] = actions.move_selection_previous,
-        },
-        -- NORMAL MODE mappings
-        n = {
-          ["J"] = actions.move_selection_next,
-          ["K"] = actions.move_selection_previous,
-        },
-      })
-      return opts
+      local apply = require "configs.telescope"
+      return apply(opts)
     end,
   },
   {
@@ -201,7 +186,7 @@ return {
   },
   {
     "stevearc/conform.nvim",
-    event = 'BufWritePre',
+    event = "BufWritePre",
     opts = require "configs.conform",
   },
 
@@ -242,4 +227,33 @@ return {
   -- 		},
   -- 	},
   -- },
+  {
+    "nvim-treesitter/nvim-treesitter",
+    opts = function(_, opts)
+      opts = opts or {}
+      local ensure = opts.ensure_installed or {}
+      local to_add = { "go", "gomod", "gotmpl", "html", "css" }
+      local present = {}
+      for _, name in ipairs(ensure) do
+        present[name] = true
+      end
+      for _, name in ipairs(to_add) do
+        if not present[name] then
+          table.insert(ensure, name)
+        end
+      end
+      opts.ensure_installed = ensure
+      opts.highlight = opts.highlight or {}
+      opts.highlight.enable = true
+      return opts
+    end,
+  },
+  {
+    "windwp/nvim-ts-autotag",
+    ft = { "html", "xml", "javascript", "typescript", "tsx", "vue", "svelte", "gotmpl", "gohtmltmpl" },
+    opts = {},
+    config = function()
+      require("nvim-ts-autotag").setup()
+    end,
+  },
 }

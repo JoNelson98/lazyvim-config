@@ -1,12 +1,12 @@
+-- NvChad default LSP settings
 require("nvchad.configs.lspconfig").defaults()
 
--- LSP servers configuration
-
--- New  Neovim 0.11 LSP entry point
-local lsp = vim.lsp.config
 local util = require "lspconfig.util"
 
-lsp.gopls.setup {
+-- -----------------------
+-- Go (gopls)
+-- -----------------------
+vim.lsp.config("gopls", {
   cmd = { "gopls" },
   filetypes = { "go", "gomod" },
   root_dir = util.root_pattern("go.mod", ".git"),
@@ -20,31 +20,37 @@ lsp.gopls.setup {
       staticcheck = true,
     },
   },
-}
+})
 
--- TypeScript/JavaScript (tsserver via typescript-tools or built-in)
--- Use the new name `ts_ls` with mason-lspconfig
+vim.lsp.enable "gopls"
+
+-- -----------------------
+-- TypeScript / JavaScript
+-- -----------------------
 pcall(function()
-  lsp.ts_ls.setup {}
+  vim.lsp.config("ts_ls", {})
+  vim.lsp.enable "ts_ls"
 end)
 
+-- -----------------------
 -- ESLint
+-- -----------------------
 pcall(function()
-  lsp.eslint.setup {
+  vim.lsp.config("eslint", {
     settings = {
       workingDirectories = { mode = "auto" },
       format = false,
     },
-  }
+  })
+  vim.lsp.enable "eslint"
 end)
 
--- HTML/CSS/JSON
-pcall(function()
-  lsp.html.setup {}
-end)
-pcall(function()
-  lsp.cssls.setup {}
-end)
-pcall(function()
-  lsp.jsonls.setup {}
-end)
+-- -----------------------
+-- HTML / CSS / JSON
+-- -----------------------
+for _, server in ipairs { "html", "cssls", "jsonls" } do
+  pcall(function()
+    vim.lsp.config(server, {})
+    vim.lsp.enable(server)
+  end)
+end

@@ -10,10 +10,15 @@ M.base46 = {
   -- theme = "jay",
   theme = "custom_dragon",
 }
--- hl_override = {
--- 	Comment = { italic = true },
--- 	["@comment"] = { italic = true },
--- },
+M.base46.hl_override = {
+  TelescopePromptNormal = { bg = "#101010" },
+  TelescopeResultsNormal = { bg = "#101010" },
+  TelescopePreviewNormal = { bg = "#101010" },
+  TelescopeBorder = { bg = "#101010", fg = "#101010" },
+  TelescopePromptBorder = { bg = "#101010", fg = "#101010" },
+  TelescopeResultsBorder = { bg = "#101010", fg = "#101010" },
+  TelescopePreviewBorder = { bg = "#101010", fg = "#101010" },
+}
 
 M.nvdash = {
   load_on_startup = true,

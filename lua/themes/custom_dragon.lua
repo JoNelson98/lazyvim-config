@@ -2,7 +2,7 @@
 local M = require "base46.themes.kanagawa-dragon"
 
 -- High-contrast: force pitch-black backgrounds and darker UI surfaces
-M.base_16.base00 = "#000000" -- editor background
+M.base_16.base00 = "#101010" -- editor background
 
 M.base_30.black = "#000000"
 M.base_30.darker_black = "#000000"
@@ -18,8 +18,8 @@ M.base_30.lightbg = "#111111" -- floats/pmenus
 M.polish_hl = vim.tbl_deep_extend("force", M.polish_hl or {}, {
   Normal = { bg = "#000000" },
   NormalNC = { bg = "#000000" },
-  NormalFloat = { bg = "#000000" },
-  FloatBorder = { bg = "#000000" },
+  NormalFloat = { bg = "#101010" },
+  FloatBorder = { bg = "#101010" },
   SignColumn = { bg = "#000000" },
   EndOfBuffer = { fg = "#000000" }, -- hide tildes
 
@@ -114,6 +114,15 @@ M.polish_hl = vim.tbl_deep_extend("force", M.polish_hl or {}, {
     NvimTreeWinSeparator = { fg = "#100e0e", bg = "#100e0e" },
     NvimTreeCursorLine = { bg = "#181616" },
   },
+
+  -- Telescope background colors
+  TelescopePromptNormal = { bg = M.base_16.base00, fg = "NONE" },
+  TelescopeResultsNormal = { bg = M.base_16.base00, fg = "NONE" },
+  TelescopePreviewNormal = { bg = M.base_16.base00, fg = "NONE" },
+  TelescopeBorder = { bg = M.base_16.base00, fg = M.base_16.base00 },
+  TelescopePromptBorder = { bg = M.base_16.base00, fg = M.base_16.base00 },
+  TelescopeResultsBorder = { bg = M.base_16.base00, fg = M.base_16.base00 },
+  TelescopePreviewBorder = { bg = M.base_16.base00, fg = M.base_16.base00 },
 })
 
 M.type = "dark"

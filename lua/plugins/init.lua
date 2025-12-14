@@ -7,7 +7,7 @@ return {
     opts = function(_, opts)
       opts = opts or {}
       opts.ensure_installed = opts.ensure_installed or {}
-      local to_add = { "ts_ls", "eslint", "jsonls", "html", "cssls" }
+      local to_add = { "ts_ls", "eslint", "jsonls", "html", "cssls", "pyright" }
       local present = {}
       for _, name in ipairs(opts.ensure_installed) do
         present[name] = true
@@ -255,5 +255,49 @@ return {
     config = function()
       require("nvim-ts-autotag").setup()
     end,
+  },
+  {
+    "akinsho/toggleterm.nvim",
+    version = "*",
+    config = true,
+  },
+  {
+    "kdheepak/lazygit.nvim",
+    cmd = "LazyGit",
+    dependencies = { "nvim-lua/plenary.nvim" },
+  },
+  {
+    "lukas-reineke/indent-blankline.nvim",
+    event = "VeryLazy",
+    main = "ibl",
+    opts = {
+      indent = {
+        char = "│",
+        tab_char = "│",
+        highlight = "IblIndent",
+      },
+      scope = {
+        enabled = true,
+        char = "│",
+        show_start = false,
+        show_end = false,
+        highlight = "IblScope",
+      },
+      exclude = {
+        filetypes = {
+          "help",
+          "alpha",
+          "dashboard",
+          "neo-tree",
+          "Trouble",
+          "trouble",
+          "lazy",
+          "mason",
+          "notify",
+          "toggleterm",
+          "lazyterm",
+        },
+      },
+    },
   },
 }

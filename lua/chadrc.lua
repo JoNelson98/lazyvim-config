@@ -20,6 +20,9 @@ M.base46.hl_override = {
   TelescopePreviewBorder = { bg = "#101010", fg = "#101010" },
 }
 
+vim.api.nvim_set_hl(0, "IblIndent", { fg = "#606060", blend = 0 })              -- indent guides (visible on dark bg)
+vim.api.nvim_set_hl(0, "IblScope", { fg = "#808080", bold = true, blend = 0 })  -- scope line (more visible)
+
 M.nvdash = {
   load_on_startup = true,
   header = {

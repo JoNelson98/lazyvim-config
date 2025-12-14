@@ -4,45 +4,41 @@ function M.setup()
   local alpha = require("alpha")
   local dashboard = require("alpha.themes.dashboard")
 
-  -- 🔁 animated header (FULL control lives here)
-  local frames = {
-    {
-      "     Lock in FN   ",
-    },
-    {
-      "  > Lock in FN  ",
-    },
-    {
-      " >> Lock in FN ",
-    },
-    {
-      ">>> Lock in FN ",
-    },
+  dashboard.section.header.val = {
+    "=================     ===============     ===============   ========  ========",
+    "\\\\ . . . . . . .\\\\   //. . . . . . .\\\\   //. . . . . . .\\\\  \\\\. . . .\\\\// . . //",
+    "||. . ._____. . .|| ||. . ._____. . .|| ||. . ._____. . .|| || . . .\\/ . . .||",
+    "|| . .||   ||. . || || . .||   ||. . || || . .||   ||. . || ||. . . . . . . ||",
+    "||. . ||   || . .|| ||. . ||   || . .|| ||. . ||   || . .|| || . | . . . . .||",
+    "|| . .||   ||. _-|| ||-_ .||   ||. . || || . .||   ||. _-|| ||-_.|\\ . . . . ||",
+    "||. . ||   ||-'  || ||  `-||   || . .|| ||. . ||   ||-'  || ||  `|\\_ . .|. .||",
+    "|| . _||   ||    || ||    ||   ||_ . || || . _||   ||    || ||   |\\ `-_/| . ||",
+    "||_-' ||  .|/    || ||    \\|.  || `-_|| ||_-' ||  .|/    || ||   | \\  / |-_.||",
+    "||    ||_-'      || ||      `-_||    || ||    ||_-'      || ||   | \\  / |  `||",
+    "||    `'         || ||         `'    || ||    `'         || ||   | \\  / |   ||",
+    "||            .===' `===.         .==='.`===.         .===' /==. |  \\/  |   ||",
+    "||         .=='   \\_|-_ `===. .==='   _|_   `===. .===' _-|/   `==  \\/  |   ||",
+    "||      .=='    _-'    `-_  `='    _-'   `-_    `='  _-'   `-_  /|  \\/  |   ||",
+    "||   .=='    _-'          '-__\\._-'         '-_./__-'         `' |. /|  |   ||",
+    "||.=='    _-'                                                     `' |  /==.||",
+    "=='    _-'                        N E O V I M                         \\/   `==",
   }
 
-  local frame = 1
-  dashboard.section.header.val = frames[frame]
 
-  local timer = vim.loop.new_timer()
-  timer:start(
-    0,
-    120,
-    vim.schedule_wrap(function()
-      frame = frame % #frames + 1
-      dashboard.section.header.val = frames[frame]
-      alpha.redraw()
-    end)
-  )
-
-  -- 🧭 buttons (also live here)
   dashboard.section.buttons.val = {
     dashboard.button("f", "  Find Files", "<cmd>SnacksFiles<CR>"),
     dashboard.button("g", "󰈞  Live Grep", "<cmd>SnacksGrep<CR>"),
-    dashboard.button("w", "󰈞  Find Word", "<cmd>SnacksWord<CR>"),
+    dashboard.button("r", "󰄉  Recent Files", "<cmd>lua require('snacks').picker.recent()<CR>"),
+    dashboard.button("p", "󰏗  Projects", "<cmd>lua require('snacks').picker.projects()<CR>"),
     dashboard.button("L", "󰆧  Lazy sync", "<cmd>Lazy sync<CR>"),
     dashboard.button("G", "  Lazy Git", "<cmd>LazyGit<CR>"),
     dashboard.button("q", "  Quit", "<cmd>qa<CR>"),
   }
+  local function footer()
+    return "Don't Stop Unitl You are Proud..."
+  end
+
+  dashboard.section.footer.val = footer()
   alpha.setup(dashboard.config)
 end
 

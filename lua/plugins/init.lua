@@ -267,6 +267,15 @@ return {
     dependencies = { "nvim-lua/plenary.nvim" },
   },
   {
+    "folke/noice.nvim",
+    event = "VeryLazy",
+    dependencies = {
+      "MunifTanjim/nui.nvim",
+      "rcarriga/nvim-notify",
+    },
+    opts = {},
+  },
+  {
     "lukas-reineke/indent-blankline.nvim",
     event = "VeryLazy",
     main = "ibl",

@@ -2,9 +2,9 @@ return {
   { "dasupradyumna/midnight.nvim", lazy = false },
   {
     "goolord/alpha-nvim",
-    event = "VimEnter",
+    lazy = false,
+    priority = 2000,
     config = function()
-      package.loaded["ui.alpha"] = nil
       require("ui.alpha").setup()
     end
   },
@@ -245,36 +245,6 @@ return {
     "kdheepak/lazygit.nvim",
     cmd = "LazyGit",
     dependencies = { "nvim-lua/plenary.nvim" },
-  },
-  {
-    "folke/snacks.nvim",
-    priority = 1000,
-    lazy = false,
-    keys = {
-      {
-        "<leader>ff",
-        function() require("snacks").picker.files() end,
-        desc = "Find files (Snacks)",
-      },
-      {
-        "<leader>fg",
-        function() require("snacks").picker.grep() end,
-        desc = "Live grep (Snacks)",
-      },
-      {
-        "<leader>fw",
-        function()
-          require("snacks").picker.grep { search = vim.fn.expand("<cword>") }
-        end,
-        desc = "Find word (Snacks)",
-      },
-    },
-    config = function()
-      require("snacks").setup {
-        picker = { enabled = true },
-        notifier = { enabled = true },
-      }
-    end,
   },
   {
     "folke/noice.nvim",

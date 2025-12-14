@@ -90,3 +90,26 @@ vim.keymap.set("c", "bb", function()
     return "bb"
   end
 end, { expr = true, noremap = true, desc = "bb -> ` (cmdline, word-boundary)" })
+
+-- picker for diagnostics
+vim.keymap.set("n", "<leader>fd", function()
+  require("snacks").picker.diagnostics()
+end, { desc = "diagnostics (snacks)" })
+
+vim.keymap.set("n", "<leader>fD", function()
+  require("snacks").picker.diagnostics { bufnr = 0 }
+end, { desc = "Buffer diagnostics (snacks)" })
+
+vim.api.nvim_create_user_command("SnacksFiles", function()
+  require("snacks").picker.files()
+end, {})
+
+vim.api.nvim_create_user_command("SnacksGrep", function()
+  require("snacks").picker.grep()
+end, {})
+
+vim.api.nvim_create_user_command("SnacksWord", function()
+  require("snacks").picker.grep {
+    search = vim.fn.expand("<cword>"),
+  }
+end, {})

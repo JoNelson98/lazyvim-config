@@ -107,21 +107,23 @@ return {
       {
         "<leader>ff",
         function()
-          require("telescope.builtin").find_files()
+          require("snacks").picker.files()
         end,
         desc = "Find files",
       },
       {
         "<leader>fg",
         function()
-          require("telescope.builtin").live_grep()
+          require("snacks").picker.grep()
         end,
         desc = "Live grep",
       },
       {
         "<leader>fw",
         function()
-          require("telescope.builtin").live_grep()
+          require("snacks").picker.grep {
+            search = vim.fn.expand("<cword>"),
+          }
         end,
         desc = "Live grep (words)",
       },
@@ -265,6 +267,18 @@ return {
     "kdheepak/lazygit.nvim",
     cmd = "LazyGit",
     dependencies = { "nvim-lua/plenary.nvim" },
+  },
+  {
+    "folke/snacks.nvim",
+    priority = 1000,
+    lazy = false,
+    config = function()
+      require("snacks").setup {
+        picker = { enabled = true },
+        notifier = { enabled = true },
+      }
+    end
+
   },
   {
     "folke/noice.nvim",

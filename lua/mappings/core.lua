@@ -113,3 +113,16 @@ vim.api.nvim_create_user_command("SnacksWord", function()
     search = vim.fn.expand("<cword>"),
   }
 end, {})
+map("n", "<leader>ff", function()
+  require("snacks").picker.files()
+end, opts)
+
+map("n", "<leader>fg", function()
+  require("snacks").picker.grep()
+end, opts)
+
+map("n", "<leader>fw", function()
+  require("snacks").picker.grep {
+    search = vim.fn.expand("<cword>"),
+  }
+end, opts)

@@ -7,7 +7,7 @@ function M.setup()
   -- 🔁 animated header (FULL control lives here)
   local frames = {
     {
-      "   Lock in FN   ",
+      "     Lock in FN   ",
     },
     {
       "  > Lock in FN  ",

@@ -237,11 +237,6 @@ return {
     end,
   },
   {
-    "akinsho/toggleterm.nvim",
-    version = "*",
-    config = true,
-  },
-  {
     "kdheepak/lazygit.nvim",
     cmd = "LazyGit",
     dependencies = { "nvim-lua/plenary.nvim" },

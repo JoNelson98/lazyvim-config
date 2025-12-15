@@ -4,3 +4,4 @@ require "nvchad.mappings"
 pcall(require, "mappings.core")
 pcall(require, "mappings.terminal")
 pcall(require, "mappings.completion")
+pcall(require, "mappings.tmux_panes")

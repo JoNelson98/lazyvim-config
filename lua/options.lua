@@ -4,6 +4,11 @@ require "nvchad.options"
 vim.opt.shortmess:append("I")
 vim.g.nvim_dashboard_disable = true
 
+-- Fix swap file directory
+vim.opt.directory = vim.fn.stdpath("state") .. "/swap//"
+-- Create swap directory if it doesn't exist
+vim.fn.mkdir(vim.fn.stdpath("state") .. "/swap", "p")
+
 -- local o = vim.o
 -- o.cursorlineopt ='both' -- to enable cursorline!
 
@@ -23,3 +28,6 @@ vim.api.nvim_create_autocmd("FileType", {
     vim.bo.commentstring = "{{/* %s */}}"
   end,
 })
+
+-- Load autocmds
+pcall(require, "configs.autocmds")

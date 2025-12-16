@@ -8,26 +8,6 @@ return {
       require("ui.alpha").setup()
     end
   },
-  -- Ensure required LSP servers are installed
-  {
-    "williamboman/mason-lspconfig.nvim",
-    event = "VeryLazy",
-    opts = function(_, opts)
-      opts = opts or {}
-      opts.ensure_installed = opts.ensure_installed or {}
-      local to_add = { "ts_ls", "eslint", "jsonls", "html", "cssls", "pyright" }
-      local present = {}
-      for _, name in ipairs(opts.ensure_installed) do
-        present[name] = true
-      end
-      for _, name in ipairs(to_add) do
-        if not present[name] then
-          table.insert(opts.ensure_installed, name)
-        end
-      end
-      return opts
-    end,
-  },
   {
     "folke/flash.nvim",
     event = "VeryLazy",
@@ -170,30 +150,9 @@ return {
     opts = require "configs.conform",
   },
 
-  -- These are some examples, uncomment them if you want to see them work!
-  {
-    "neovim/nvim-lspconfig",
-    event = { "BufReadPre", "BufNewFile" },
-    config = function()
-      require "configs.lspconfig"
-    end,
-  },
-  {
-    "hrsh7th/nvim-cmp",
-    event = "InsertEnter",
-    opts = function(_, opts)
-      local cmp = require "cmp"
-      -- kill off the default ctrl-j/k
-      opts.mapping["<C-j>"] = nil
-      opts.mapping["<C-k>"] = nil
-
-      -- bind Alt (Option) + j/k for next/prev completion
-      opts.mapping["<A-j>"] = cmp.mapping.select_next_item { behavior = cmp.SelectBehavior.Insert }
-
-      opts.mapping["<A-k>"] = cmp.mapping.select_prev_item { behavior = cmp.SelectBehavior.Insert }
-      return opts
-    end,
-  },
+  -- nvim-lspconfig is configured in lua/plugins/lsp.lua
+  -- (removed duplicate to prevent conflicts)
+  -- nvim-cmp is configured in lua/plugins/cmp_cmdline.lua (same file that handles command completion)
 
   -- test new blink
   -- { import = "nvchad.blink.lazyspec" },
@@ -212,7 +171,7 @@ return {
     opts = function(_, opts)
       opts = opts or {}
       local ensure = opts.ensure_installed or {}
-      local to_add = { "go", "gomod", "gotmpl", "html", "css" }
+      local to_add = { "go", "gomod", "gotmpl", "html", "css", "python" }
       local present = {}
       for _, name in ipairs(ensure) do
         present[name] = true

@@ -55,40 +55,4 @@ for _, server in ipairs { "html", "cssls", "jsonls" } do
   end)
 end
 
--- -----------------------
--- Python (pyright) - Odoo optimized
--- -----------------------
-pcall(function()
-  vim.lsp.config("pyright", {
-    filetypes = { "python" },
-    -- Odoo-specific root markers
-    root_dir = util.root_pattern(
-      "__manifest__.py",
-      "__openerp__.py",
-      "odoo.conf",
-      "openerp-server.conf",
-      "pyproject.toml",
-      "setup.py",
-      "setup.cfg",
-      "requirements.txt",
-      ".git"
-    ),
-    settings = {
-      python = {
-        analysis = {
-          autoImportCompletions = true,
-          typeCheckingMode = "basic",
-          -- Odoo uses dynamic attributes, so be more lenient
-          diagnosticMode = "openFilesOnly",
-          useLibraryCodeForTypes = true,
-          -- Auto-detect venv
-          venvPath = ".",
-          venv = ".venv",
-        },
-        -- Auto-detect Python version
-        defaultPythonVersion = "3.8",
-      },
-    },
-  })
-  vim.lsp.enable "pyright"
-end)
+-- Python (pylsp) is configured in lua/plugins/lsp.lua via opts.servers

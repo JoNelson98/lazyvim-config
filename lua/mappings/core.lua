@@ -127,7 +127,9 @@ map("n", "<leader>fw", function()
   }
 end, opts)
 
--- Diagnostics pickers
+-- Diagnostics pickers (override NvChad defaults if they exist)
+pcall(vim.keymap.del, "n", "<leader>dd")
+pcall(vim.keymap.del, "n", "<leader>dD")
 vim.keymap.set("n", "<leader>dd", function()
   require("snacks").picker.diagnostics()
 end, { desc = "Diagnostics (buffer)" })

@@ -126,3 +126,11 @@ map("n", "<leader>fw", function()
     search = vim.fn.expand("<cword>"),
   }
 end, opts)
+
+-- Diagnostics pickers
+vim.keymap.set("n", "<leader>dd", function()
+  require("snacks").picker.diagnostics()
+end, { desc = "Diagnostics (buffer)" })
+vim.keymap.set("n", "<leader>dD", function()
+  require("snacks").picker.diagnostics_all()
+end, { desc = "Diagnostics (workspace)" })

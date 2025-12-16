@@ -25,49 +25,44 @@ return {
         settings = {
           pylsp = {
             plugins = {
-              pyflakes = { enabled = false },
-              pycodestyle = { enabled = false },
-              mccabe = { enabled = false },
-              pylint = { enabled = false },
-
+              ruff = {
+                enabled = true,
+                formatEnabled = true,
+              },
               jedi_completion = { enabled = true },
               jedi_hover = { enabled = true },
               jedi_definition = { enabled = true },
               jedi_references = { enabled = true },
               jedi_signature_help = { enabled = true },
 
-              autopep8 = { enabled = true },
+              pyflakes = { enabled = false },
+              pycodestyle = { enabled = false },
+              mccabe = { enabled = false },
+              pylint = { enabled = false },
+              autopep8 = { enabled = false },
             },
           },
         },
         on_attach = function(client, bufnr)
-          -- Format on save for Python files (using pylsp's autopep8)
-          if client.supports_method("textDocument/formatting") then
-            local augroup = vim.api.nvim_create_augroup("LspFormatting", { clear = true })
-            vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
-            vim.api.nvim_create_autocmd("BufWritePre", {
-              group = augroup,
-              buffer = bufnr,
-              callback = function()
-                vim.lsp.buf.format({
-                  async = false,
-                  filter = function(c)
-                    return c.name == "pylsp"
-                  end
-                })
-              end,
-            })
+          if client.name ~= "pylsp" then
+            return
           end
 
-          -- Manual format keybinding: <leader>fm
-          vim.keymap.set("n", "<leader>fm", function()
-            vim.lsp.buf.format({
-              async = false,
-              filter = function(c)
-                return c.name == "pylsp"
-              end
-            })
-          end, { buffer = bufnr, desc = "Format with pylsp (autopep8)" })
+          if not client.supports_method("textDocument/formatting") then
+            return
+          end
+
+          vim.api.nvim_create_autocmd("BufWritePre", {
+            buffer = bufnr,
+            callback = function()
+              vim.lsp.buf.format({
+                bufnr = bufnr,
+                filter = function(c)
+                  return c.name == "pylsp"
+                end,
+              })
+            end,
+          })
         end,
       })
     end,

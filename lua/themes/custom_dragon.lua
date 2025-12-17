@@ -10,7 +10,7 @@ M.base_30.black2 = "#060606"
 M.base_30.one_bg = "#0a0a0a"
 M.base_30.one_bg2 = "#101010"
 M.base_30.one_bg3 = "#141414"
-M.base_30.line = "#0f0f0f" -- cursorline
+M.base_30.line = "#0f0f0f"    -- cursorline
 M.base_30.statusline_bg = "#0a0a0a"
 M.base_30.lightbg = "#111111" -- floats/pmenus
 
@@ -47,8 +47,8 @@ M.polish_hl = vim.tbl_deep_extend("force", M.polish_hl or {}, {
     ["@constructor"] = { fg = "#abd8c5" },
 
     -- Your requested accents across all languages (#78adba)
-    ["@keyword"] = { fg = "#78adba" }, -- const, let, import, async/await, etc.
-    ["@keyword.storage"] = { fg = "#78adba" }, -- storage-class variants
+    ["@keyword"] = { fg = "#78adba" },          -- const, let, import, async/await, etc.
+    ["@keyword.storage"] = { fg = "#78adba" },  -- storage-class variants
     ["@keyword.modifier"] = { fg = "#78adba" }, -- modifiers
     ["@keyword.coroutine"] = { fg = "#78adba" },
     ["@keyword.operator"] = { fg = "#78adba" },
@@ -59,8 +59,8 @@ M.polish_hl = vim.tbl_deep_extend("force", M.polish_hl or {}, {
     ["@keyword.directive.define"] = { fg = "#78adba" },
     ["@keyword.directive"] = { fg = "#78adba" },
     ["@keyword.import"] = { fg = "#78adba" },
-    ["@operator"] = { fg = "#78adba" }, -- => and other operators
-    ["@punctuation.bracket"] = { fg = "#78adba" }, -- { } ( ) [ ]
+    ["@operator"] = { fg = "#78adba" },              -- => and other operators
+    ["@punctuation.bracket"] = { fg = "#78adba" },   -- { } ( ) [ ]
     ["@punctuation.delimiter"] = { fg = "#78adba" }, -- , ; : .
     ["@type"] = { fg = "#78adba" },
     ["@type.builtin"] = { fg = "#cacaca" },
@@ -69,7 +69,7 @@ M.polish_hl = vim.tbl_deep_extend("force", M.polish_hl or {}, {
     ["@string.regex"] = { fg = "#f8f8f6" },
     ["@string.escape"] = { fg = "#f8f8f6" },
     ["@string.special"] = { fg = "#f8f8f6" },
-    ["@variable"] = { fg = "#e1ebb6" },
+    ["@variable"] = { fg = "" },
     ["@variable.parameter"] = { fg = "#f8f8f6" },
     ["@variable.builtin"] = { fg = "#e1ebb6" },
     ["@variable.member"] = { fg = "#74d5cf" },

@@ -10,6 +10,7 @@ M.base46 = {
   theme = "custom_dragon",
 }
 M.base46.hl_override = {
+  NonText = { fg = "#fff0f0" },
   TelescopePromptNormal = { bg = "#101010" },
   TelescopeResultsNormal = { bg = "#101010" },
   TelescopePreviewNormal = { bg = "#101010" },

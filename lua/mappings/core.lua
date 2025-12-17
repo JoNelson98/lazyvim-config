@@ -127,6 +127,10 @@ map("n", "<leader>fw", function()
   }
 end, opts)
 
+map("n", "<leader>st", function()
+  require("utils.todosnacks").open()
+end, { desc = "Snacks TODO picker" })
+
 -- Diagnostics pickers (override NvChad defaults if they exist)
 -- Use vim.schedule to ensure this runs after NvChad's mappings
 vim.schedule(function()

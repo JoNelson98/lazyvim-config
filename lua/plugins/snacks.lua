@@ -42,6 +42,31 @@ return {
     vim.api.nvim_set_hl(0, "SnacksPickerListItemSelected", {
       bg = "#181818", fg = fg,
     })
+    -- Picker border + title
+    -- vim.api.nvim_set_hl(0, "SnacksPickerBorder", {
+    --   fg = "#f9bb80",
+    --   bg = "#101010",
+    -- })
+    vim.api.nvim_set_hl(0, "SnacksPickerInputBorder", {
+      fg = "#f9bb80",
+      bg = "#101010",
+    })
+
+    vim.api.nvim_set_hl(0, "SnacksPickerTitle", {
+      fg = "#f9bb80",
+      bold = true,
+    })
+    local title_fg = "#7491a1"
+
+    vim.api.nvim_set_hl(0, "SnacksPickerListTitle", {
+      fg = title_fg,
+      bold = true,
+    })
+
+    vim.api.nvim_set_hl(0, "SnacksPickerPreviewTitle", {
+      fg = title_fg,
+      bold = true,
+    })
 
     -- Preview pane
     vim.api.nvim_set_hl(0, "SnacksPickerPreview", { bg = bg, fg = fg })

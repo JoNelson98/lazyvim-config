@@ -131,6 +131,14 @@ map("n", "<leader>st", function()
   require("utils.todosnacks").open()
 end, { desc = "Snacks TODO picker" })
 
+map("n", "<leader>fb", function()
+  require("snacks").picker.buffers()
+end, { desc = "Snacks: Buffers" })
+
+map("n", "<leader>fr", function()
+  require("snacks").picker.recent({ cwd_only = true })
+end, { desc = "Snacks: Recent files" })
+
 -- Diagnostics pickers (override NvChad defaults if they exist)
 -- Use vim.schedule to ensure this runs after NvChad's mappings
 vim.schedule(function()

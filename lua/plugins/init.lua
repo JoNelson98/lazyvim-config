@@ -90,11 +90,12 @@ return {
     "nvim-telescope/telescope.nvim",
     cmd = "Telescope",
     keys = {
-      {
-        "<leader>fb",
-        function() require("telescope.builtin").buffers() end,
-        desc = "Buffers",
-      },
+      -- FIX: allow snacks.picker to have this command
+      -- {
+      --   "<leader>fb",
+      --   function() require("telescope.builtin").buffers() end,
+      --   desc = "Buffers",
+      -- },
       {
         "<leader>fh",
         function() require("telescope.builtin").help_tags() end,

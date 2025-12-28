@@ -12,7 +12,7 @@ return {
     -- Setup regular buffer completion (like command completion)
     cmp.setup(vim.tbl_deep_extend("force", nvchad_cmp, {
       sources = {
-        { name = "nvim_lsp" },  -- FIRST for pylsp
+        { name = "nvim_lsp" }, -- FIRST for pylsp
         { name = "luasnip" },
         { name = "buffer" },
         { name = "nvim_lua" },
@@ -50,14 +50,14 @@ return {
       },
     })
 
-    -- `:` → command + path completion
-    cmp.setup.cmdline(":", {
-      mapping = cmp.mapping.preset.cmdline(),
-      sources = cmp.config.sources(
-        { { name = "path" } },
-        { { name = "cmdline" } }
-      ),
-    })
+    -- -- `:` → command + path completion
+    -- cmp.setup.cmdline(":", {
+    --   mapping = cmp.mapping.preset.cmdline(),
+    --   sources = cmp.config.sources(
+    --     { { name = "path" } },
+    --     { { name = "cmdline" } }
+    --   ),
+    -- })
 
     -- fallback if cmp UI ever dies
     vim.opt.wildmenu = true

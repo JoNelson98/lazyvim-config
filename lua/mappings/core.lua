@@ -151,3 +151,5 @@ vim.schedule(function()
     require("snacks").picker.diagnostics_all()
   end, { desc = "Diagnostics (workspace)" })
 end)
+-- lazygit
+map("n", "<leader>gg", "<cmd>LazyGit<CR>", { desc = "LazyGit" })

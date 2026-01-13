@@ -1,44 +1,45 @@
-local Terminal = require("toggleterm.terminal").Terminal
-
 local M = {}
 
-local FISH = "fish -c"
-
-local VENV = "source ~/odoo/code/venv.macos/bin/activate.fish"
-local ODOO = "python3 ~/odoo/code/ilf-odoo15/odoo/odoo-bin"
-local CONF = "-c ~/odoo/confg/staging.conf"
-
-local function fish_cmd(cmd)
-  return string.format('%s "%s; %s"', FISH, VENV, cmd)
+local function term()
+  return require("toggleterm.terminal").Terminal
 end
 
-M.server = Terminal:new({
-  cmd = fish_cmd(string.format("%s %s", ODOO, CONF)),
-  direction = "float",
-  close_on_exit = false,
-  hidden = true,
-})
+local function fish_cmd(cmd)
+  return string.format(
+    'fish -c "source ~/odoo/code/venv.macos/bin/activate.fish; %s"',
+    cmd
+  )
+end
 
-M.shell = Terminal:new({
-  cmd = fish_cmd(string.format("%s shell %s", ODOO, CONF)),
-  direction = "float",
-  close_on_exit = false,
-  hidden = true,
-})
+local function odoo()
+  return "python3 ~/odoo/code/ilf-odoo15/odoo/odoo-bin -c ~/odoo/confg/staging.conf"
+end
 
 function M.toggle_server()
-  M.server:toggle()
+  M._server = M._server or term():new({
+    cmd = fish_cmd(odoo()),
+    direction = "float",
+    close_on_exit = false,
+    hidden = true,
+  })
+  M._server:toggle()
 end
 
 function M.restart_server()
-  if M.server:is_open() then
-    M.server:shutdown()
+  if M._server and M._server:is_open() then
+    M._server:shutdown()
   end
-  M.server:open()
+  M.toggle_server()
 end
 
 function M.toggle_shell()
-  M.shell:toggle()
+  M._shell = M._shell or term():new({
+    cmd = fish_cmd(odoo() .. " shell"),
+    direction = "float",
+    close_on_exit = false,
+    hidden = true,
+  })
+  M._shell:toggle()
 end
 
 return M

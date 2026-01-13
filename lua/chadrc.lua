@@ -9,20 +9,6 @@ M.base46 = {
   -- theme = "jay",
   theme = "custom_dragon",
 }
-M.base46.hl_override = {
-  NonText = { fg = "#fff0f0" },
-  TelescopePromptNormal = { bg = "#101010" },
-  TelescopeResultsNormal = { bg = "#101010" },
-  TelescopePreviewNormal = { bg = "#101010" },
-  TelescopeBorder = { bg = "#101010", fg = "#101010" },
-  TelescopePromptBorder = { bg = "#101010", fg = "#101010" },
-  TelescopeResultsBorder = { bg = "#101010", fg = "#101010" },
-  TelescopePreviewBorder = { bg = "#101010", fg = "#101010" },
-}
-
-vim.api.nvim_set_hl(0, "IblIndent", { fg = "#606060", blend = 0 })             -- indent guides (visible on dark bg)
-vim.api.nvim_set_hl(0, "IblScope", { fg = "#808080", bold = true, blend = 0 }) -- scope line (more visible)
-vim.api.nvim_set_hl(0, "Cursor", { fg = "#101010", bg = "#f9bb80" })           -- scope line (more visible)
 
 M.nvdash = {
   load_on_startup = false,

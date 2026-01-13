@@ -18,7 +18,6 @@ function M.setup()
   map("n", "<leader>ov", picker.views, { desc = "Odoo: find views" })
   map("n", "<leader>om", picker.models, { desc = "Odoo: find models" })
   map("n", "<leader>of", picker.fields, { desc = "Odoo: find fields" })
-  map("n", "<leader>oo", picker.under_cursor, { desc = "Odoo: jump under cursor" })
 
   -- Upgrade current module (Fish + venv aware)
   map("n", "<leader>ou", function()

@@ -1,13 +1,15 @@
-local picker = require("snacks.picker")
-
 local M = {}
+
+local function snacks_picker()
+  return require("snacks.picker")
+end
 
 local function odoo_root()
   return vim.fn.getcwd()
 end
 
 function M.search_views()
-  picker.grep({
+  snacks_picker().grep({
     title = "Odoo Views (inherit / xpath)",
     cwd = odoo_root(),
     glob = { "**/*.xml" },
@@ -17,7 +19,7 @@ function M.search_views()
 end
 
 function M.search_models()
-  picker.grep({
+  snacks_picker().grep({
     title = "Odoo Models",
     cwd = odoo_root(),
     glob = { "**/*.py" },
@@ -27,12 +29,21 @@ function M.search_models()
 end
 
 function M.search_fields()
-  picker.grep({
+  snacks_picker().grep({
     title = "Odoo Fields",
     cwd = odoo_root(),
     glob = { "**/*.py", "**/*.xml" },
     regex = true,
     prompt = "fields\\.|<field",
+  })
+end
+
+function M.search_under_cursor()
+  local word = vim.fn.expand("<cword>")
+  snacks_picker().grep({
+    title = "Odoo: " .. word,
+    cwd = odoo_root(),
+    search = word,
   })
 end
 

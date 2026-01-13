@@ -3,3 +3,4 @@ vim.g.lsp_skip_setup = {
   "ruff_lsp",
   "pyright",
 }
+require("odoo").setup()

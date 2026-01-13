@@ -26,58 +26,67 @@ return {
   },
   config = function(_, opts)
     require("snacks").setup(opts)
-    vim.api.nvim_set_hl(0, "SnacksDashboardKey", { fg = "#5ceef6" })
-    vim.api.nvim_set_hl(0, "SnacksDashboardTitle", { fg = "#c49aee" })
 
-    local bg = "#101010" -- NOT pitch black, editor-ish
-    local fg = "NONE"
+    local function hl_exists(name)
+      local ok, hl = pcall(vim.api.nvim_get_hl, 0, { name = name })
+      return ok and hl and not vim.tbl_isempty(hl)
+    end
 
-    -- Input box
-    vim.api.nvim_set_hl(0, "SnacksPickerInput", { bg = bg, fg = fg })
-    vim.api.nvim_set_hl(0, "SnacksPickerInputCursor", { bg = bg, fg = fg })
+    local function link(from, to)
+      vim.api.nvim_set_hl(0, from, { link = to })
+    end
 
-    -- Results list
-    vim.api.nvim_set_hl(0, "SnacksPickerList", { bg = bg, fg = fg })
-    vim.api.nvim_set_hl(0, "SnacksPickerListItem", { bg = bg, fg = fg })
-    vim.api.nvim_set_hl(0, "SnacksPickerListItemSelected", {
-      bg = "#181818", fg = fg,
+    local function apply_snacks_hl()
+      -- Prefer Evergarden's "Pick*" groups when available (they match the theme's picker UI).
+      local use_pick = hl_exists("PickNormal") and hl_exists("PickBorder") and hl_exists("PickTitle")
+
+      if use_pick then
+        link("SnacksDashboardKey", "PickPointer")
+        link("SnacksDashboardTitle", "PickTitle")
+
+        link("SnacksPickerInput", "PickNormal")
+        link("SnacksPickerInputCursor", "PickSel")
+
+        link("SnacksPickerList", "PickNormal")
+        link("SnacksPickerListItem", "PickNormal")
+        link("SnacksPickerListItemSelected", "PickSel")
+
+        link("SnacksPickerInputBorder", "PickBorder")
+        link("SnacksPickerTitle", "PickTitle")
+        link("SnacksPickerListTitle", "PickTitle")
+        link("SnacksPickerPreviewTitle", "PickTitle")
+
+        link("SnacksPickerPreview", "PickNormal")
+        return
+      end
+
+      -- Generic fallback for other colorschemes.
+      link("SnacksDashboardKey", "Special")
+      link("SnacksDashboardTitle", "Title")
+
+      link("SnacksPickerInput", "NormalFloat")
+      link("SnacksPickerInputCursor", "CursorLine")
+
+      link("SnacksPickerList", "NormalFloat")
+      link("SnacksPickerListItem", "NormalFloat")
+      link("SnacksPickerListItemSelected", "PmenuSel")
+
+      link("SnacksPickerInputBorder", "FloatBorder")
+      link("SnacksPickerTitle", "FloatTitle")
+      link("SnacksPickerListTitle", "FloatTitle")
+      link("SnacksPickerPreviewTitle", "FloatTitle")
+
+      link("SnacksPickerPreview", "NormalFloat")
+    end
+
+    -- Colorschemes (including Evergarden) reset highlights on `:colorscheme`,
+    -- so re-apply after every colorscheme change.
+    vim.api.nvim_create_autocmd("ColorScheme", {
+      group = vim.api.nvim_create_augroup("SnacksThemeHighlights", { clear = true }),
+      callback = apply_snacks_hl,
     })
-    -- Picker border + title
-    -- vim.api.nvim_set_hl(0, "SnacksPickerBorder", {
-    --   fg = "#f9bb80",
-    --   bg = "#101010",
-    -- })
-    vim.api.nvim_set_hl(0, "SnacksPickerInputBorder", {
-      fg = "#f9bb80",
-      bg = "#101010",
-    })
 
-    vim.api.nvim_set_hl(0, "SnacksPickerTitle", {
-      fg = "#f9bb80",
-      bold = true,
-    })
-    local title_fg = "#7491a1"
-
-    vim.api.nvim_set_hl(0, "SnacksPickerListTitle", {
-      fg = title_fg,
-      bold = true,
-    })
-
-    vim.api.nvim_set_hl(0, "SnacksPickerPreviewTitle", {
-      fg = title_fg,
-      bold = true,
-    })
-
-    -- Preview pane
-    vim.api.nvim_set_hl(0, "SnacksPickerPreview", { bg = bg, fg = fg })
-    -- Set snack picker colors to match editor background
-    -- vim.api.nvim_set_hl(0, "SnacksPickerNormal", { bg = editor_bg, fg = "NONE" })
-    -- vim.api.nvim_set_hl(0, "SnacksPickerBorder", { bg = editor_bg, fg = editor_bg })
-    -- vim.api.nvim_set_hl(0, "SnacksPickerPromptNormal", { bg = editor_bg, fg = "NONE" })
-    -- vim.api.nvim_set_hl(0, "SnacksPickerResultsNormal", { bg = editor_bg, fg = "NONE" })
-    -- vim.api.nvim_set_hl(0, "SnacksPickerPreviewNormal", { bg = editor_bg, fg = "NONE" })
-    -- vim.api.nvim_set_hl(0, "SnacksPickerPromptBorder", { bg = editor_bg, fg = editor_bg })
-    -- vim.api.nvim_set_hl(0, "SnacksPickerResultsBorder", { bg = editor_bg, fg = editor_bg })
-    -- vim.api.nvim_set_hl(0, "SnacksPickerPreviewBorder", { bg = editor_bg, fg = editor_bg })
+    -- Apply once for current theme.
+    vim.schedule(apply_snacks_hl)
   end,
 }

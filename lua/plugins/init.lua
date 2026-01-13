@@ -1,4 +1,43 @@
 return {
+  -- Evergarden (everviolet) colorscheme
+  {
+    "everviolet/nvim",
+    name = "evergarden",
+    lazy = false,
+    priority = 1000,
+    opts = {
+      theme = {
+        variant = "winter", -- 'winter'|'fall'|'spring'|'summer'
+        accent = "green",
+      },
+      editor = {
+        transparent_background = false,
+        override_terminal = true,
+        sign = { color = "none" },
+        float = {
+          color = "mantle",
+          solid_border = false,
+        },
+        completion = {
+          color = "surface0",
+        },
+      },
+      integrations = {
+        gitsigns = true,
+        nvimtree = true,
+        telescope = true,
+        which_key = true,
+        indent_blankline = { enable = true, scope_color = "green" },
+      },
+    },
+    config = function(_, opts)
+      require("evergarden").setup(opts)
+    end,
+  },
+
+  -- Containerized legacy NvChad base46 theme (kept for easy revert/sharing)
+  { dir = vim.fn.stdpath "config" .. "/local/custom_dragon_theme", lazy = false },
+
   { "dasupradyumna/midnight.nvim", lazy = false },
   {
     "goolord/alpha-nvim",

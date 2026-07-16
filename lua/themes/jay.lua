@@ -54,26 +54,7 @@ M.base_16 = {
   base0F = "#979fb1", -- extra grey
 }
 
--- Exact token overrides for your mapping
-M.polish_hl = {
-  treesitter = {
-    ["@keyword"] = { fg = M.base_30.purple }, -- if/then/end/do/for/in
-    ["@keyword.function"] = { fg = M.base_30.yellow }, -- function keyword
-    ["@string"] = { fg = M.base_30.green }, -- lime-green strings
-    ["@number"] = { fg = M.base_30.orange }, -- numbers
-    ["@boolean"] = { fg = M.base_30.orange }, -- true/false
-    ["@operator"] = { fg = M.base_30.grey }, -- == ~= .. =
-    ["@punctuation.delimiter"] = { fg = M.base_30.grey },
-    ["@punctuation.bracket"] = { fg = M.base_30.grey },
-    ["@function.call"] = { fg = M.base_30.blue }, -- gsub, getqflist
-    ["@function.builtin"] = { fg = M.base_30.red }, -- type()
-    ["@property"] = { fg = M.base_30.green }, -- .text, .items
-    ["@field"] = { fg = M.base_30.green },
-    ["@variable"] = { fg = M.base_30.white }, -- val, idx, response
-    ["@variable.parameter"] = { fg = M.base_30.white },
-    ["@type"] = { fg = M.base_30.red }, -- type hints
-  },
-}
+-- No explicit Treesitter/LSP token overrides: let the active colorscheme decide.
 
 M.type = "dark"
 M = require("base46").override_theme(M, "jay")

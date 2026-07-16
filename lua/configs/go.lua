@@ -2,6 +2,7 @@ return function()
   local opts = {
     goimports = "goimports",
     lsp_cfg = true,
+    lsp_keymaps = false,
   }
   require("go").setup(opts)
   vim.api.nvim_create_autocmd("BufWritePre", {

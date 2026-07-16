@@ -36,8 +36,8 @@ require("lazy").setup({
 dofile(vim.g.base46_cache .. "defaults")
 dofile(vim.g.base46_cache .. "statusline")
 
--- Apply Evergarden after NvChad/base46 highlights
-pcall(vim.cmd.colorscheme, "evergarden")
+-- Apply Horizon after NvChad/base46 highlights
+pcall(vim.cmd.colorscheme, "horizon")
 
 require "options"
 --require "nvchad.autocmds"

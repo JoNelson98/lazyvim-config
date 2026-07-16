@@ -7,7 +7,7 @@
 local M = {}
 M.base46 = {
   -- theme = "jay",
-  theme = "custom_dragon",
+  theme = "horizon",
 }
 
 M.nvdash = {
@@ -47,6 +47,10 @@ M.ui = {
   tabufline = {
     enabled = false,
   },
+}
+
+M.lsp = {
+  signature = false,
 }
 
 

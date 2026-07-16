@@ -1,8 +1,20 @@
 local map = vim.keymap.set
 
+local function tmux_next_window()
+  if not vim.env.TMUX or vim.env.TMUX == "" then
+    return
+  end
+  if vim.fn.executable("tmux") ~= 1 then
+    return
+  end
+  vim.fn.system({ "tmux", "next-window" })
+end
+
 -- Tmux navigation
 map("n", "<S-h>", "<cmd>TmuxNavigateLeft<CR>", { desc = "window left" })
 map("n", "<S-l>", "<cmd>TmuxNavigateRight<CR>", { desc = "window right" })
+-- Same as prefix + l in tmux (next window)
+map("n", ",,", tmux_next_window, { desc = "tmux: next window" })
 
 -- NvChad terminal toggles
 map({ "n", "t" }, "<leader>tt", function()

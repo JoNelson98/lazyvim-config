@@ -18,6 +18,13 @@ return {
     picker = {
       enabled = true,
       layout = "telescope", -- This layout has input at the bottom
+      focus = "list",       -- Open picker on results list (normal-mode navigation)
+      sources = {
+        files = {
+          ignored = true,
+          hidden = true,
+        },
+      },
     },
     quickfile = { enabled = true },
     scroll = { enabled = false },
@@ -77,6 +84,27 @@ return {
       link("SnacksPickerPreviewTitle", "FloatTitle")
 
       link("SnacksPickerPreview", "NormalFloat")
+
+      -- Horizon: nudge border + results text only.
+      if vim.g.colors_name == "horizon" then
+        local ok, base46 = pcall(require, "base46")
+        if ok then
+          local c = base46.get_theme_tb("base_30") or {}
+          local orange = c.orange or c.sun or "NONE"
+          local fg = c.white or "NONE"
+          vim.api.nvim_set_hl(0, "SnacksPickerInputBorder", { fg = orange })
+          vim.api.nvim_set_hl(0, "SnacksPickerListTitle", { fg = orange })
+          vim.api.nvim_set_hl(0, "SnacksPickerListItem", { fg = fg })
+          vim.api.nvim_set_hl(0, "SnacksPickerList", { fg = fg })
+
+          -- Make file paths readable in results (orange accents for path parts).
+          vim.api.nvim_set_hl(0, "SnacksPickerFile", { fg = fg })
+          vim.api.nvim_set_hl(0, "SnacksPickerDirectory", { fg = orange })
+          vim.api.nvim_set_hl(0, "SnacksPickerDir", { fg = orange })
+          vim.api.nvim_set_hl(0, "SnacksPickerPathHidden", { fg = orange })
+          vim.api.nvim_set_hl(0, "SnacksPickerPathIgnored", { fg = orange })
+        end
+      end
     end
 
     -- Colorschemes (including Evergarden) reset highlights on `:colorscheme`,

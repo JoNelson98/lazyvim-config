@@ -22,23 +22,16 @@ return {
         ["<A-j>"] = cmp.mapping.select_next_item { behavior = cmp.SelectBehavior.Insert },
         ["<A-k>"] = cmp.mapping.select_prev_item { behavior = cmp.SelectBehavior.Insert },
       }),
-      -- Keep it minimal - disable documentation windows
+      -- Keep completion menu, but remove verbose docs popups.
       window = {
-        documentation = cmp.config.window.bordered({
-          border = "none",
-          winhighlight = "Normal:Normal",
-        }),
         completion = cmp.config.window.bordered({
           border = "none",
           winhighlight = "Normal:Normal",
         }),
+        documentation = cmp.config.disable,
       },
-      -- Disable documentation popup
       view = {
         entries = { name = "custom", selection_order = "near_cursor" },
-        docs = {
-          auto_open = false, -- Don't auto-open docs
-        },
       },
     }))
 

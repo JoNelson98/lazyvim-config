@@ -23,6 +23,8 @@ map("n", "<C-k>", "<nop>", { desc = "disabled" })
 map("n", "<C-s>", "<nop>", { desc = "disabled" })
 map("n", "<C-c>", "<nop>", { desc = "disabled" })
 map("n", "<C-n>", "<nop>", { desc = "disabled" })
+-- Nuke comma (built-in: repeats last f/F/t/T). We use `,,` elsewhere.
+map({ "n", "x", "o" }, ",", "<nop>", { desc = "disabled" })
 
 map("t", "<C-x>", "<nop>", { desc = "disabled" })
 
@@ -36,6 +38,7 @@ map("n", ";", ":", { desc = "CMD enter command mode" })
 
 -- Scrolling: j=down, k=up (half page)
 map("n", "<S-j>", "<C-d>zz", { desc = "scroll down half page" })
+map("n", "K", "<C-u>zz", { desc = "scroll up half page" })
 map("n", "<S-k>", "<C-u>zz", { desc = "scroll up half page" })
 
 -- Insert navigation
@@ -53,11 +56,14 @@ map("n", "<S-n>", "<cmd>NvimTreeToggle<CR>", { desc = "nvimtree toggle window" }
 -- Escape insert mode
 map("i", "jk", "<ESC>", { desc = "Escape insert mode" })
 
--- Ensure K remains scroll-up in Go files (override vim-go doc mapping)
-vim.api.nvim_create_autocmd("FileType", {
-  pattern = "go",
-  callback = function()
-    vim.keymap.set("n", "K", "<C-u>zz", { buffer = true, desc = "scroll up half page" })
+-- Keep K as scroll-up in LSP buffers (override hover mapping)
+vim.api.nvim_create_autocmd("LspAttach", {
+  callback = function(args)
+    vim.schedule(function()
+      vim.keymap.set("n", "K", "<C-u>zz", { buffer = args.buf, desc = "scroll up half page" })
+      vim.keymap.set("n", "<S-k>", "<C-u>zz", { buffer = args.buf, desc = "scroll up half page" })
+      vim.keymap.set("n", "<leader>lh", vim.lsp.buf.hover, { buffer = args.buf, desc = "LSP hover" })
+    end)
   end,
 })
 
@@ -126,6 +132,11 @@ map("n", "<leader>fw", function()
     search = vim.fn.expand("<cword>"),
   }
 end, opts)
+
+-- find in current buffer (snacks lines picker), focused in input mode
+map("n", "<leader>fs", function()
+  require("snacks").picker.lines({ focus = "input" })
+end, { desc = "Snacks: find in current buffer" })
 
 map("n", "<leader>st", function()
   require("utils.todosnacks").open()

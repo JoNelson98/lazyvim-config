@@ -1,38 +1,9 @@
 return {
-  -- Evergarden (everviolet) colorscheme
+  -- Horizon colorscheme
   {
-    "everviolet/nvim",
-    name = "evergarden",
+    "akinsho/horizon.nvim",
     lazy = false,
     priority = 1000,
-    opts = {
-      theme = {
-        variant = "winter", -- 'winter'|'fall'|'spring'|'summer'
-        accent = "green",
-      },
-      editor = {
-        transparent_background = false,
-        override_terminal = true,
-        sign = { color = "none" },
-        float = {
-          color = "mantle",
-          solid_border = false,
-        },
-        completion = {
-          color = "surface0",
-        },
-      },
-      integrations = {
-        gitsigns = true,
-        nvimtree = true,
-        telescope = true,
-        which_key = true,
-        indent_blankline = { enable = true, scope_color = "green" },
-      },
-    },
-    config = function(_, opts)
-      require("evergarden").setup(opts)
-    end,
   },
 
   -- Containerized legacy NvChad base46 theme (kept for easy revert/sharing)
@@ -59,7 +30,7 @@ return {
         function()
           require("flash").jump()
         end,
-        desc = "Flash",
+        desc = "Flash Jump",
       },
       {
         "S",
@@ -101,6 +72,11 @@ return {
     build = ":GoInstallBinaries",
     config = function()
       vim.g.go_fmt_command = "goimports"
+      -- Use nvim-cmp + gopls completion, not vim-go omnifunc completion hooks.
+      vim.g.go_code_completion_enabled = 0
+      -- Disable vim-go "echo info/signature" message after completion.
+      vim.g.go_echo_go_info = 0
+      vim.g.go_auto_type_info = 0
       -- Disable vim-go overriding 'K' for godoc so our scroll mapping works
       vim.g.go_doc_keywordprg_enabled = 0
       -- Also disable default definition mappings to prevent surprises
@@ -110,6 +86,7 @@ return {
 
   {
     "ray-x/go.nvim",
+    version = "v0.11",
     ft = { "go", "gomod" },
     dependencies = {
       "ray-x/guihua.lua",
@@ -224,7 +201,17 @@ return {
       opts.ensure_installed = ensure
       opts.highlight = opts.highlight or {}
       opts.highlight.enable = true
+      opts.auto_install = true
       return opts
+    end,
+    config = function(_, opts)
+      require("nvim-treesitter.configs").setup(opts)
+      -- NvChad/base46 applies treesitter highlights during setup; re-apply
+      -- the active colorscheme so code colors match the theme.
+      vim.schedule(function()
+        local active = vim.g.colors_name or "horizon"
+        pcall(vim.cmd.colorscheme, active)
+      end)
     end,
   },
   {
@@ -247,7 +234,16 @@ return {
       "MunifTanjim/nui.nvim",
       "rcarriga/nvim-notify",
     },
-    opts = {},
+    opts = {
+      lsp = {
+        signature = {
+          enabled = false,
+          auto_open = {
+            enabled = false,
+          },
+        },
+      },
+    },
   },
   {
     "lukas-reineke/indent-blankline.nvim",

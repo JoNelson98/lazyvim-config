@@ -1,6 +1,14 @@
 return {
   -- Horizon colorscheme
   {
+    "vague-theme/vague.nvim",
+    lazy = false,
+    priority = 1000,
+    config = function()
+      -- Optional configuration can go here
+    end,
+  },
+  {
     "akinsho/horizon.nvim",
     lazy = false,
     priority = 1000,
@@ -9,7 +17,7 @@ return {
   -- Containerized legacy NvChad base46 theme (kept for easy revert/sharing)
   { dir = vim.fn.stdpath "config" .. "/local/custom_dragon_theme", lazy = false },
 
-  { "dasupradyumna/midnight.nvim", lazy = false },
+  { "dasupradyumna/midnight.nvim",                                 lazy = false },
   {
     "goolord/alpha-nvim",
     lazy = false,
@@ -209,7 +217,7 @@ return {
       -- NvChad/base46 applies treesitter highlights during setup; re-apply
       -- the active colorscheme so code colors match the theme.
       vim.schedule(function()
-        local active = vim.g.colors_name or "horizon"
+        local active = vim.g.colors_name or "vague"
         pcall(vim.cmd.colorscheme, active)
       end)
     end,

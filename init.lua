@@ -36,8 +36,8 @@ require("lazy").setup({
 dofile(vim.g.base46_cache .. "defaults")
 dofile(vim.g.base46_cache .. "statusline")
 
--- Apply Horizon after NvChad/base46 highlights
-pcall(vim.cmd.colorscheme, "horizon")
+-- Apply active colorscheme after NvChad/base46 highlights
+pcall(vim.cmd.colorscheme, "vague")
 
 require "options"
 --require "nvchad.autocmds"

@@ -8,6 +8,14 @@ local M = {}
 M.base46 = {
   -- theme = "jay",
   theme = "horizon",
+  integrations = {
+    ["nvimtree"] = false,
+    ["telescope"] = false,
+    ["cmp"] = false,
+    ["gitsigns"] = false,
+    ["todo"] = false,
+    ["lsp"] = false,
+  },
 }
 
 M.nvdash = {

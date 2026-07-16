@@ -71,19 +71,25 @@ return {
       link("SnacksDashboardKey", "Special")
       link("SnacksDashboardTitle", "Title")
 
-      link("SnacksPickerInput", "NormalFloat")
+      link("SnacksPickerInput", "Normal")
       link("SnacksPickerInputCursor", "CursorLine")
 
-      link("SnacksPickerList", "NormalFloat")
-      link("SnacksPickerListItem", "NormalFloat")
+      link("SnacksPickerList", "Normal")
+      link("SnacksPickerListItem", "Normal")
       link("SnacksPickerListItemSelected", "PmenuSel")
 
-      link("SnacksPickerInputBorder", "FloatBorder")
-      link("SnacksPickerTitle", "FloatTitle")
-      link("SnacksPickerListTitle", "FloatTitle")
-      link("SnacksPickerPreviewTitle", "FloatTitle")
+      local border_fg = "#505050"
+      local ok, hl_comment = pcall(vim.api.nvim_get_hl, 0, { name = "Comment" })
+      if ok and hl_comment and hl_comment.fg then
+        border_fg = string.format("#%06x", hl_comment.fg)
+      end
+      vim.api.nvim_set_hl(0, "SnacksPickerInputBorder", { fg = border_fg, bg = "NONE" })
 
-      link("SnacksPickerPreview", "NormalFloat")
+      link("SnacksPickerTitle", "Title")
+      link("SnacksPickerListTitle", "Title")
+      link("SnacksPickerPreviewTitle", "Title")
+
+      link("SnacksPickerPreview", "Normal")
 
       -- Horizon: nudge border + results text only.
       if vim.g.colors_name == "horizon" then
